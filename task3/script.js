@@ -1,21 +1,41 @@
-const trafficLightEl = document.querySelector("#trafficLight");
+const trafficLightEl = document.querySelectorAll(".trafficLight");
+const trafficLightEl1 = document.querySelector("#trafficLight_1");
+const trafficLightEl2 = document.querySelector("#trafficLight_2");
+const trafficLightEl3 = document.querySelector("#trafficLight_3");
 
 function makeGreen() {
-  trafficLightEl.style.background = "green";
-  trafficLightEl.removeEventListener("click", makeGreen);
-  trafficLightEl.addEventListener("click", makeYellow);
+  trafficLightEl1.style.background = "green";
+  delMassListener(trafficLightEl, makeGreen);
+  addMassListener(trafficLightEl, makeYellow);
+  trafficLightEl3.style.background = "black";
 }
 
 function makeYellow() {
-  trafficLightEl.style.background = "yellow";
-  trafficLightEl.removeEventListener("click", makeYellow);
-  trafficLightEl.addEventListener("click", makeRed);
+  trafficLightEl2.style.background = "yellow";
+  delMassListener(trafficLightEl, makeYellow);
+  addMassListener(trafficLightEl, makeRed);
+  trafficLightEl1.style.background = "black";
 }
 
 function makeRed() {
-  trafficLightEl.style.background = "red";
-  trafficLightEl.removeEventListener("click", makeRed);
-  trafficLightEl.addEventListener("click", makeGreen);
+  trafficLightEl3.style.background = "red";
+  delMassListener(trafficLightEl, makeRed);
+  addMassListener(trafficLightEl, makeGreen);
+  trafficLightEl2.style.background = "black";
 }
 
-trafficLightEl.addEventListener("click", makeGreen);
+//добавляет слушатель по массиву
+function addMassListener(trafficLights, func) {
+  trafficLights.forEach((element) => {
+    element.addEventListener("click", func);
+  });
+}
+
+//удаляет слушатель по массиву
+function delMassListener(trafficLights, func) {
+  trafficLights.forEach((element) => {
+    element.removeEventListener("click", func);
+  });
+}
+
+addMassListener(trafficLightEl, makeGreen);
